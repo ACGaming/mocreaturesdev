@@ -108,8 +108,9 @@ public class MoCEntityEnt extends MoCEntityAnimal {
         return false;
     }
 
+    // TODO: Use a Loot Table for this entity instead of this legacy drops function.
     @Override
-    protected void dropFewItems(boolean flag, int x) {
+    public void dropMyStuff() {
         int i = this.rand.nextInt(3);
         int qty = this.rand.nextInt(12) + 4;
         int typ = 0;
