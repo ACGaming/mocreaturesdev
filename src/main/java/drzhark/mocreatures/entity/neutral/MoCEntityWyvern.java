@@ -632,7 +632,7 @@ public class MoCEntityWyvern extends MoCEntityTameableAnimal {
         if (!getIsAdult()) {
             return null;
         }
-
+        // TODO: Loot table is currently empty as a placeholder.
         return MoCLootTables.WYVERN;
     }
 
