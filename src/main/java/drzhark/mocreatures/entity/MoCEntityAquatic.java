@@ -530,6 +530,15 @@ public abstract class MoCEntityAquatic extends EntityCreature implements IMoCEnt
         return 0F;
     }
 
+    @Override
+    public void onDeath(DamageSource damagesource) {
+        if (!this.world.isRemote) {
+            dropMyStuff();
+            dropLegacyEgg();
+        }
+
+        super.onDeath(damagesource);
+    }
     /**
      * Checks if the entity's current position is a valid location to spawn this
      * entity.
@@ -562,6 +571,9 @@ public abstract class MoCEntityAquatic extends EntityCreature implements IMoCEnt
         return (this instanceof IMoCTameable) && getIsTamed();
     }
 
+    public void dropLegacyEgg() {
+
+    }
     protected void dropMyStuff() {
     }
 
