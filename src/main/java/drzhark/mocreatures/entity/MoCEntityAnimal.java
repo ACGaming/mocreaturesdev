@@ -142,11 +142,6 @@ public abstract class MoCEntityAnimal extends EntityAnimal implements IMoCEntity
     }
 
     @Override
-    public boolean renderName() {
-        return MoCreatures.proxy.getDisplayPetName() && (getPetName() != null && !getPetName().isEmpty() && (!this.isBeingRidden()) && (this.getRidingEntity() == null));
-    }
-
-    @Override
     public boolean getIsAdult() {
         return this.dataManager.get(ADULT);
     }

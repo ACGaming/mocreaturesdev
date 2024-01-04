@@ -535,9 +535,9 @@ public class MoCEntityHorse extends MoCEntityTameableAnimal {
     }
 
     @Override
-    public boolean renderName() {
+    public boolean shouldRenderNameAndHealth() {
         if (getIsGhost() && getAge() < 10) return false;
-        return super.renderName();
+        return super.shouldRenderNameAndHealth();
     }
 
     @Override

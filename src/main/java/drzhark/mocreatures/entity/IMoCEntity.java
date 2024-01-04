@@ -39,8 +39,6 @@ public interface IMoCEntity {
 
     void performAnimation(int i);
 
-    boolean renderName();
-
     int nameYOffset();
 
     void makeEntityJump();

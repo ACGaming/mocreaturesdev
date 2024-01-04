@@ -523,11 +523,6 @@ public abstract class MoCEntityAquatic extends EntityCreature implements IMoCEnt
     }
 
     @Override
-    public boolean renderName() {
-        return MoCreatures.proxy.getDisplayPetName() && (getPetName() != null && !getPetName().isEmpty() && (!this.isBeingRidden()) && (this.getRidingEntity() == null));
-    }
-
-    @Override
     public boolean shouldRenderNameAndHealth() {
         return getIsTamed() && (!this.isBeingRidden()) && (this.getRidingEntity() == null);
     }

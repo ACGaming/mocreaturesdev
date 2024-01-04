@@ -1071,8 +1071,8 @@ public class MoCEntityKitty extends MoCEntityTameableAnimal {
     }
 
     @Override
-    public boolean renderName() {
-        return getKittyState() != 14 && getKittyState() != 15 && getKittyState() > 1 && super.renderName();
+    public boolean shouldRenderNameAndHealth() {
+        return getKittyState() != 14 && getKittyState() != 15 && getKittyState() > 1 && super.shouldRenderNameAndHealth();
     }
 
     @Override
