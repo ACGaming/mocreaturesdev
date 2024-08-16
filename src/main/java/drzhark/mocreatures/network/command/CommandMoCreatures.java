@@ -67,6 +67,7 @@ public class CommandMoCreatures extends CommandBase {
         commands.add("/moc ogrestrength <float>");
         commands.add("/moc ostricheggdropchance <int>");
         commands.add("/moc rareitemdropchance <int>");
+        commands.add("/moc rareitemloottablerarity <common|uncommon|rare>");
         commands.add("/moc spawnhorse <int>");
         commands.add("/moc spawnwyvern <int>");
         commands.add("/moc tamedcount <playername>");
@@ -103,6 +104,7 @@ public class CommandMoCreatures extends CommandBase {
         tabCompletionStrings.add("ogreattackstrength");
         tabCompletionStrings.add("ostricheggdropchance");
         tabCompletionStrings.add("rareitemdropchance");
+        tabCompletionStrings.add("rareitemloottablerarity");
         tabCompletionStrings.add("spawnhorse");
         tabCompletionStrings.add("spawnwyvern");
         tabCompletionStrings.add("tamedcount");

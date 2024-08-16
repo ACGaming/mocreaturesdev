@@ -7,6 +7,7 @@ import drzhark.mocreatures.MoCreatures;
 import drzhark.mocreatures.config.MoCConfigCategory;
 import drzhark.mocreatures.config.MoCConfiguration;
 import drzhark.mocreatures.config.MoCProperty;
+import drzhark.mocreatures.config.RareItemLootTableRarity;
 import drzhark.mocreatures.entity.IMoCEntity;
 import drzhark.mocreatures.entity.MoCEntityData;
 import drzhark.mocreatures.entity.hostile.MoCEntityGolem;
@@ -92,6 +93,7 @@ public class MoCProxy implements IGuiHandler {
     public int ostrichEggDropChance;
     public int particleFX;
     public int rareItemDropChance;
+    public RareItemLootTableRarity rareItemLootTableRarity;
     public int scorpionEggDropChance;
     public int wyvernDimension;
     public int wyvernEggDropChance;
@@ -305,6 +307,7 @@ public class MoCProxy implements IGuiHandler {
         this.ostrichEggDropChance = this.mocSettingsConfig.get(CATEGORY_MOC_CREATURE_GENERAL_SETTINGS, "OstrichEggDropChance", 3, "The percentage for ostriches to drop an egg.").getInt();
         this.particleFX = this.mocSettingsConfig.get(CATEGORY_MOC_GENERAL_SETTINGS, "ParticleFX", 3, "The density of MoCreatures particle effects.").getInt();
         this.rareItemDropChance = this.mocSettingsConfig.get(CATEGORY_MOC_CREATURE_GENERAL_SETTINGS, "RareItemDropChance", 25, "The percentage for certain creatures to drop a rare item when killed. Most creatures use loot tables and can be configured with a loot table editor instead.").getInt();
+        this.rareItemLootTableRarity = RareItemLootTableRarity.valueOf(this.mocSettingsConfig.get(CATEGORY_MOC_CREATURE_GENERAL_SETTINGS, "RareItemLootTableRarity", "UNCOMMON", "The rarity of the rare item drop.").getString().toUpperCase());
         this.scorpionEggDropChance = this.mocSettingsConfig.get(CATEGORY_MOC_CREATURE_GENERAL_SETTINGS, "ScorpionEggDropChance", 17, "The percentage for scorpions to drop an egg.").getInt();
         this.spawnMultiplier = this.mocSettingsConfig.get(CATEGORY_MOC_CREATURE_GENERAL_SETTINGS, "SpawnMultiplier", 2.0D, "Multiplier for entity spawns during world generation.").getDouble(2.0D);
         this.staticBed = this.mocSettingsConfig.get(CATEGORY_MOC_CREATURE_GENERAL_SETTINGS, "StaticBed", true, "Makes the kitty bed not pushable.").getBoolean(true);

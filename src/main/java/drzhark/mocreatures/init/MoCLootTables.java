@@ -5,15 +5,11 @@ package drzhark.mocreatures.init;
 
 import drzhark.mocreatures.MoCConstants;
 import drzhark.mocreatures.MoCreatures;
+import drzhark.mocreatures.config.RareItemLootTableRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootEntryItem;
-import net.minecraft.world.storage.loot.LootPool;
-import net.minecraft.world.storage.loot.LootTableList;
-import net.minecraft.world.storage.loot.RandomValueRange;
-import net.minecraft.world.storage.loot.conditions.KilledByPlayer;
+import net.minecraft.world.storage.loot.*;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
-import net.minecraft.world.storage.loot.conditions.RandomChanceWithLooting;
 import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.minecraft.world.storage.loot.functions.SetCount;
 import net.minecraftforge.event.LootTableLoadEvent;
@@ -124,16 +120,31 @@ public class MoCLootTables {
     public static final ResourceLocation WEREHUMAN = new ResourceLocation(MoCConstants.MOD_ID, "entities/werehuman");
     public static final ResourceLocation WEREWOLF = new ResourceLocation(MoCConstants.MOD_ID, "entities/werewolf");
 
+    // Rare Drops Overrides
+    public static final ResourceLocation COMMON_RARE_DROPS = new ResourceLocation(MoCConstants.MOD_ID, "entities/rare_drops/common");
+    public static final ResourceLocation UNCOMMON_RARE_DROPS = new ResourceLocation(MoCConstants.MOD_ID, "entities/rare_drops/uncommon");
+    public static final ResourceLocation RARE_RARE_DROPS = new ResourceLocation(MoCConstants.MOD_ID, "entities/rare_drops/rare");
+
     @SubscribeEvent
     public static void onLootTableLoad(LootTableLoadEvent event) {
         LootPool main = event.getTable().getPool("main");
 
-        float raritySetting = (float) MoCreatures.proxy.rareItemDropChance / 100.0F;
+        RareItemLootTableRarity raritySetting = MoCreatures.proxy.rareItemLootTableRarity;
         ResourceLocation baseTable = event.getName();
-
-        if (main == null) {
+        ResourceLocation rareItemsTable = null;
+        if (raritySetting == RareItemLootTableRarity.COMMON) {
+            rareItemsTable = COMMON_RARE_DROPS;
+        } else if (raritySetting == RareItemLootTableRarity.UNCOMMON) {
+            rareItemsTable = UNCOMMON_RARE_DROPS;
+        } else if (raritySetting == RareItemLootTableRarity.RARE) {
+            rareItemsTable = RARE_RARE_DROPS;
+        }
+        if (main == null || rareItemsTable == null) {
             return;
         }
+        LootPool rareItemsPool = event.getLootTableManager().getLootTableFromLocation(rareItemsTable).getPool("main");
+
+
 
         if (baseTable.equals(LootTableList.CHESTS_ABANDONED_MINESHAFT) || baseTable.equals(LootTableList.CHESTS_SIMPLE_DUNGEON) || baseTable.equals(LootTableList.CHESTS_DESERT_PYRAMID) || baseTable.equals(LootTableList.CHESTS_JUNGLE_TEMPLE) || baseTable.equals(LootTableList.CHESTS_IGLOO_CHEST) || baseTable.equals(LootTableList.CHESTS_END_CITY_TREASURE) || baseTable.equals(LootTableList.CHESTS_NETHER_BRIDGE) || baseTable.equals(LootTableList.CHESTS_STRONGHOLD_LIBRARY) || baseTable.equals(LootTableList.CHESTS_STRONGHOLD_CROSSING) || baseTable.equals(LootTableList.CHESTS_STRONGHOLD_CORRIDOR) || baseTable.equals(LootTableList.CHESTS_VILLAGE_BLACKSMITH) || baseTable.equals(LootTableList.CHESTS_WOODLAND_MANSION)) {
             main.addEntry(new LootEntryItem(new ItemStack(MoCItems.ancientSilverScrap).getItem(), 5, 0, new LootFunction[]{new SetCount(new LootCondition[0], new RandomValueRange(1, 2))}, new LootCondition[0], "loottable:ancient_silver_scrap"));
@@ -141,7 +152,8 @@ public class MoCLootTables {
 
         // add some rare items dynamically to the loot table, based on the mob
         if (event.getName().equals(DARK_MANTICORE) || event.getName().equals(WEREWOLF)) {
-            main.addEntry(new LootEntryItem(new ItemStack(MoCItems.heartdarkness).getItem(), 1, 0, new LootFunction[0], new LootCondition[]{new KilledByPlayer(false), new RandomChanceWithLooting(raritySetting, 0.03F)}, "heart"));
+            // get entry from drops based on raritySetting
+            main.addEntry(rareItemsPool.getEntry("heartdarkness"));
         }
     }
 }
