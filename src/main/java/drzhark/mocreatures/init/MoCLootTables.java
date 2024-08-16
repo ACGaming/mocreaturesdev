@@ -4,13 +4,16 @@
 package drzhark.mocreatures.init;
 
 import drzhark.mocreatures.MoCConstants;
+import drzhark.mocreatures.MoCreatures;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootEntryItem;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraft.world.storage.loot.RandomValueRange;
+import net.minecraft.world.storage.loot.conditions.KilledByPlayer;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
+import net.minecraft.world.storage.loot.conditions.RandomChanceWithLooting;
 import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.minecraft.world.storage.loot.functions.SetCount;
 import net.minecraftforge.event.LootTableLoadEvent;
@@ -125,60 +128,20 @@ public class MoCLootTables {
     public static void onLootTableLoad(LootTableLoadEvent event) {
         LootPool main = event.getTable().getPool("main");
 
-        if (event.getName().equals(LootTableList.CHESTS_ABANDONED_MINESHAFT)) {
-            if (main != null) {
-                main.addEntry(new LootEntryItem(new ItemStack(MoCItems.ancientSilverScrap).getItem(), 5, 0, new LootFunction[]{new SetCount(new LootCondition[0], new RandomValueRange(1, 2))},
-                        new LootCondition[0], "loottable:ancient_silver_scrap"));
-            }
+        float raritySetting = (float) MoCreatures.proxy.rareItemDropChance / 100.0F;
+        ResourceLocation baseTable = event.getName();
+
+        if (main == null) {
+            return;
         }
 
-        if (event.getName().equals(LootTableList.CHESTS_DESERT_PYRAMID)) {
-            if (main != null) {
-                main.addEntry(new LootEntryItem(new ItemStack(MoCItems.ancientSilverScrap).getItem(), 5, 0, new LootFunction[]{new SetCount(new LootCondition[0], new RandomValueRange(1, 2))},
-                        new LootCondition[0], "loottable:ancient_silver_scrap"));
-            }
+        if (baseTable.equals(LootTableList.CHESTS_ABANDONED_MINESHAFT) || baseTable.equals(LootTableList.CHESTS_SIMPLE_DUNGEON) || baseTable.equals(LootTableList.CHESTS_DESERT_PYRAMID) || baseTable.equals(LootTableList.CHESTS_JUNGLE_TEMPLE) || baseTable.equals(LootTableList.CHESTS_IGLOO_CHEST) || baseTable.equals(LootTableList.CHESTS_END_CITY_TREASURE) || baseTable.equals(LootTableList.CHESTS_NETHER_BRIDGE) || baseTable.equals(LootTableList.CHESTS_STRONGHOLD_LIBRARY) || baseTable.equals(LootTableList.CHESTS_STRONGHOLD_CROSSING) || baseTable.equals(LootTableList.CHESTS_STRONGHOLD_CORRIDOR) || baseTable.equals(LootTableList.CHESTS_VILLAGE_BLACKSMITH) || baseTable.equals(LootTableList.CHESTS_WOODLAND_MANSION)) {
+            main.addEntry(new LootEntryItem(new ItemStack(MoCItems.ancientSilverScrap).getItem(), 5, 0, new LootFunction[]{new SetCount(new LootCondition[0], new RandomValueRange(1, 2))}, new LootCondition[0], "loottable:ancient_silver_scrap"));
         }
 
-        if (event.getName().equals(LootTableList.CHESTS_JUNGLE_TEMPLE)) {
-            if (main != null) {
-                main.addEntry(new LootEntryItem(new ItemStack(MoCItems.ancientSilverScrap).getItem(), 5, 0, new LootFunction[]{new SetCount(new LootCondition[0], new RandomValueRange(1, 2))},
-                        new LootCondition[0], "loottable:ancient_silver_scrap"));
-            }
-        }
-
-        if (event.getName().equals(LootTableList.CHESTS_SIMPLE_DUNGEON)) {
-            if (main != null) {
-                main.addEntry(new LootEntryItem(new ItemStack(MoCItems.ancientSilverScrap).getItem(), 5, 0, new LootFunction[]{new SetCount(new LootCondition[0], new RandomValueRange(1, 2))},
-                        new LootCondition[0], "loottable:ancient_silver_scrap"));
-            }
-        }
-
-        if (event.getName().equals(LootTableList.CHESTS_STRONGHOLD_CORRIDOR)) {
-            if (main != null) {
-                main.addEntry(new LootEntryItem(new ItemStack(MoCItems.ancientSilverScrap).getItem(), 5, 0, new LootFunction[]{new SetCount(new LootCondition[0], new RandomValueRange(1, 2))},
-                        new LootCondition[0], "loottable:ancient_silver_scrap"));
-            }
-        }
-
-        if (event.getName().equals(LootTableList.CHESTS_STRONGHOLD_CROSSING)) {
-            if (main != null) {
-                main.addEntry(new LootEntryItem(new ItemStack(MoCItems.ancientSilverScrap).getItem(), 5, 0, new LootFunction[]{new SetCount(new LootCondition[0], new RandomValueRange(1, 2))},
-                        new LootCondition[0], "loottable:ancient_silver_scrap"));
-            }
-        }
-
-        if (event.getName().equals(LootTableList.CHESTS_VILLAGE_BLACKSMITH)) {
-            if (main != null) {
-                main.addEntry(new LootEntryItem(new ItemStack(MoCItems.ancientSilverIngot).getItem(), 5, 0, new LootFunction[]{new SetCount(new LootCondition[0], new RandomValueRange(1, 2))},
-                        new LootCondition[0], "loottable:ancient_silver_ingot"));
-            }
-        }
-
-        if (event.getName().equals(LootTableList.CHESTS_WOODLAND_MANSION)) {
-            if (main != null) {
-                main.addEntry(new LootEntryItem(new ItemStack(MoCItems.ancientSilverScrap).getItem(), 5, 0, new LootFunction[]{new SetCount(new LootCondition[0], new RandomValueRange(1, 2))},
-                        new LootCondition[0], "loottable:ancient_silver_scrap"));
-            }
+        // add some rare items dynamically to the loot table, based on the mob
+        if (event.getName().equals(DARK_MANTICORE) || event.getName().equals(WEREWOLF)) {
+            main.addEntry(new LootEntryItem(new ItemStack(MoCItems.heartdarkness).getItem(), 1, 0, new LootFunction[0], new LootCondition[]{new KilledByPlayer(false), new RandomChanceWithLooting(raritySetting, 0.03F)}, "heart"));
         }
     }
 }
