@@ -9,6 +9,7 @@ import drzhark.mocreatures.entity.ai.*;
 import drzhark.mocreatures.entity.tameable.MoCEntityTameableAnimal;
 import drzhark.mocreatures.init.MoCLootTables;
 import drzhark.mocreatures.init.MoCSoundEvents;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -202,8 +203,11 @@ public class MoCEntityBunny extends MoCEntityTameableAnimal {
         if (this.getRidingEntity() != null) {
             this.rotationYaw = this.getRidingEntity().rotationYaw;
         }
+        if (this.isInsideOfMaterial(Material.WATER) && this.isRiding() && this.getRidingEntity() != null && this.getRidingEntity().isInWater())
+        {
+            MoCTools.dismountPassengerFromEntity(this, this.getRidingEntity(), true);
+        }
         if (!this.world.isRemote) {
-
             if (--this.jumpTimer <= 0 && this.onGround && ((this.motionX > 0.05D) || (this.motionZ > 0.05D) || (this.motionX < -0.05D) || (this.motionZ < -0.05D))) {
                 this.motionY = 0.3D;
                 this.jumpTimer = 15;
