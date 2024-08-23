@@ -1052,7 +1052,7 @@ public class MoCEntityKitty extends MoCEntityTameableAnimal {
             super.onLivingUpdate();
         }
         // Dismount player on both sides to prevent desyncs
-        if (this.isRiding()) MoCTools.dismountSneakingPlayer(this);
+        if (this.isRiding()) MoCTools.dismountPassengerFromEntity(this, this.getRidingEntity(), false);
     }
 
     public boolean onMaBack() {

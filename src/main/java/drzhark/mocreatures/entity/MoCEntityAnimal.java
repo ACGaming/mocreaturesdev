@@ -323,7 +323,7 @@ public abstract class MoCEntityAnimal extends EntityAnimal implements IMoCEntity
             this.randomAttributesUpdated = true;
         }
 
-        if (this.canRidePlayer() && this.isRiding()) MoCTools.dismountSneakingPlayer(this);
+        if (this.canRidePlayer() && this.isRiding()) MoCTools.dismountPassengerFromEntity(this, this.getRidingEntity(), false);
         super.onLivingUpdate();
     }
 

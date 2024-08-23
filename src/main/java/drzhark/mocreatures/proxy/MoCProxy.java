@@ -66,6 +66,7 @@ public class MoCProxy implements IGuiHandler {
     public boolean legacyBigGolemSounds;
     public boolean legacyBunnyTextures;
     public boolean legacyDuckSounds;
+    public boolean legacyFilchLizardSounds;
     public boolean legacyMiniGolemSounds;
     public boolean legacyRatDeathSound;
     public boolean legacySharkModel;
@@ -288,6 +289,7 @@ public class MoCProxy implements IGuiHandler {
         this.legacyBigGolemSounds = this.mocSettingsConfig.get(CATEGORY_MOC_CREATURE_GENERAL_SETTINGS, "LegacyBigGolemSounds", false, "Enables legacy big golem sounds.").getBoolean(false);
         this.legacyBunnyTextures = this.mocSettingsConfig.get(CATEGORY_MOC_CREATURE_GENERAL_SETTINGS, "LegacyBunnyTextures", false, "Enables simple bunny textures like in legacy versions.").getBoolean(false);
         this.legacyDuckSounds = this.mocSettingsConfig.get(CATEGORY_MOC_CREATURE_GENERAL_SETTINGS, "LegacyDuckSounds", false, "Enables legacy duck sounds.").getBoolean(false);
+        this.legacyFilchLizardSounds = this.mocSettingsConfig.get(CATEGORY_MOC_CREATURE_GENERAL_SETTINGS, "LegacyFilchLizardSounds", false, "Enables generic hurt sounds rather than hissing for the filch lizards.").getBoolean(false);
         this.legacyMiniGolemSounds = this.mocSettingsConfig.get(CATEGORY_MOC_CREATURE_GENERAL_SETTINGS, "LegacyMiniGolemSounds", false, "Enables legacy mini golem sounds.").getBoolean(false);
         this.legacyRatDeathSound = this.mocSettingsConfig.get(CATEGORY_MOC_CREATURE_GENERAL_SETTINGS, "LegacyRatDeathSound", false, "Enables legacy rat death sound.").getBoolean(false);
         this.legacySharkModel = this.mocSettingsConfig.get(CATEGORY_MOC_CREATURE_GENERAL_SETTINGS, "LegacySharkModel", false, "Enables the simple shark model and texture like in legacy versions.").getBoolean(false);

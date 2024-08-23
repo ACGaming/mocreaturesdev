@@ -175,7 +175,7 @@ public class MoCEntityLitterBox extends EntityLiving {
             setUsedLitter(false);
             this.litterTime = 0;
         }
-        if (this.isRiding()) MoCTools.dismountSneakingPlayer(this);
+        if (this.isRiding()) MoCTools.dismountPassengerFromEntity(this, this.getRidingEntity(), false);
     }
 
     @Override

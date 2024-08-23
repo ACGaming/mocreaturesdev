@@ -1225,10 +1225,10 @@ public class MoCTools {
         if (!force && (passenger == null || entity == null || passenger.getRidingEntity() == null)) {
             return;
         }
-        if (force || (passenger instanceof EntityLivingBase && entity.isSneaking())) {
-            System.out.println("Forcing dismount from " + entity + " for passenger " + passenger);
-            passenger.dismountRidingEntity();
+        if (force || entity.isSneaking() || passenger.isInWater()) {
+            if (force) MoCreatures.LOGGER.info("Forcing dismount from " + entity + " for passenger " + passenger);
             passenger.setPositionAndUpdate(entity.posX, entity.posY + 1D, entity.posZ);
+            passenger.dismountRidingEntity();
             MoCTools.playCustomSound(passenger, SoundEvents.ENTITY_CHICKEN_EGG);
             if (entity instanceof EntityPlayer) {
                 NBTTagCompound tag = entity.getEntityData();
@@ -1238,12 +1238,6 @@ public class MoCTools {
                 }
             }
         }
-    }
-
-    public static void dismountSneakingPlayer(Entity entity) {
-        // Entity is riding the player.
-        if (!entity.isRiding()) return;
-        dismountPassengerFromEntity(entity, entity.getRidingEntity(), false);
     }
 
     public static boolean isInsideOfMaterial(Material material, Entity entity) {

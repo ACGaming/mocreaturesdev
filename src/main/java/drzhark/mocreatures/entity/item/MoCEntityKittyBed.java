@@ -201,7 +201,7 @@ public class MoCEntityKittyBed extends EntityLiving {
                 }
             }
         }
-        if (this.isRiding()) MoCTools.dismountSneakingPlayer(this);
+        if (this.isRiding()) MoCTools.dismountPassengerFromEntity(this, this.getRidingEntity(), false);
     }
 
     @Override
