@@ -182,10 +182,10 @@ public class MoCEntityBunny extends MoCEntityTameableAnimal {
             MoCTools.playCustomSound(this, MoCSoundEvents.ENTITY_GENERIC_EAT);
             return true;
         }
-        if (this.getRidingEntity() == null) {
+        if (this.getRidingEntity() == null && !this.world.isRemote) {
             if (this.startRidingPlayer(player)) {
                 this.rotationYaw = player.rotationYaw;
-                if (!getIsTamed() && !this.world.isRemote) {
+                if (!getIsTamed()) {
                     MoCTools.tameWithName(player, this);
                 }
             }
