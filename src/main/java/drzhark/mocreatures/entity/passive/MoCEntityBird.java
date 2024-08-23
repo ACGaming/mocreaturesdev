@@ -324,7 +324,7 @@ public class MoCEntityBird extends MoCEntityTameableAnimal {
         if (!getIsTamed()) {
             return false;
         }
-        if (!this.world.isRemote && this.getRidingEntity() == null) {
+        if (this.getRidingEntity() == null) {
             if (this.startRidingPlayer(player)) {
                 this.rotationYaw = player.rotationYaw;
             }

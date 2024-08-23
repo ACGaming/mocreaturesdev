@@ -486,10 +486,10 @@ public class MoCEntityPetScorpion extends MoCEntityTameableAnimal {
             }
         }
 
-        if (!this.world.isRemote && this.getRidingEntity() == null && this.getAge() < 60 && !getIsAdult()) {
+        if (this.getRidingEntity() == null && this.getAge() < 60 && !getIsAdult()) {
             if (this.startRidingPlayer(player)) {
                 this.rotationYaw = player.rotationYaw;
-                if (!getIsTamed()) {
+                if (!this.world.isRemote && !getIsTamed()) {
                     MoCTools.tameWithName(player, this);
                 }
             }
