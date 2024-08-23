@@ -147,7 +147,7 @@ public class MoCEntityTurtle extends MoCEntityTameableAnimal {
                 flipflop(false);
                 return true;
             }
-            if (this.getRidingEntity() == null) {
+            if (!this.world.isRemote && this.getRidingEntity() == null) {
                 if (this.startRidingPlayer(player)) {
                     this.rotationYaw = player.rotationYaw;
                 }

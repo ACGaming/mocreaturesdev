@@ -476,7 +476,7 @@ public class MoCEntityKitty extends MoCEntityTameableAnimal {
             return MoCTools.tameWithName(player, this);
         }
         if (!stack.isEmpty() && getKittyState() > 2 && pickable() && stack.getItem() == Items.LEAD) {
-            if (this.startRidingPlayer(player)) {
+            if (!this.world.isRemote && this.startRidingPlayer(player)) {
                 changeKittyState(14);
             }
             return true;
@@ -490,7 +490,7 @@ public class MoCEntityKitty extends MoCEntityTameableAnimal {
         }
         // Can be picked up, then pick it up
         if (getKittyState() > 2 && pickable()) {
-            if (this.startRidingPlayer(player)) {
+            if (!this.world.isRemote && this.startRidingPlayer(player)) {
                 changeKittyState(15);
             }
             return true;
