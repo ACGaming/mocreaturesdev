@@ -182,7 +182,7 @@ public class MoCEntityBunny extends MoCEntityTameableAnimal {
             MoCTools.playCustomSound(this, MoCSoundEvents.ENTITY_GENERIC_EAT);
             return true;
         }
-        if (!this.world.isRemote && this.getRidingEntity() == null) {
+        if (this.getRidingEntity() == null && !this.world.isRemote) {
             if (this.startRidingPlayer(player)) {
                 this.rotationYaw = player.rotationYaw;
                 if (!getIsTamed()) {
@@ -202,6 +202,10 @@ public class MoCEntityBunny extends MoCEntityTameableAnimal {
 
         if (this.getRidingEntity() != null) {
             this.rotationYaw = this.getRidingEntity().rotationYaw;
+        }
+        if (this.isInsideOfMaterial(Material.WATER) && this.isRiding() && this.getRidingEntity() != null && this.getRidingEntity().isInWater())
+        {
+            MoCTools.dismountPassengerFromEntity(this, this.getRidingEntity(), true);
         }
         if (!this.world.isRemote) {
             if (--this.jumpTimer <= 0 && this.onGround && ((this.motionX > 0.05D) || (this.motionZ > 0.05D) || (this.motionX < -0.05D) || (this.motionZ < -0.05D))) {
