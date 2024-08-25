@@ -21,19 +21,19 @@ public class MoCMessageDismountRidingEntityServer implements IMessage, IMessageH
 
     @Override
     public void toBytes(ByteBuf buffer) {
-        ByteBufUtils.writeVarInt(buffer, this.passengerId, 5);
+        buffer.writeInt(this.passengerId);
     }
 
     @Override
     public void fromBytes(ByteBuf buffer) {
-        this.passengerId = ByteBufUtils.readVarInt(buffer, 5);
+        this.passengerId = buffer.readInt();
     }
 
     @Override
     public IMessage onMessage(MoCMessageDismountRidingEntityServer message, MessageContext ctx) {
         EntityPlayer player = ctx.getServerHandler().player;
 
-        Entity entity = player.world.getEntityByID(this.passengerId);
+        Entity entity = player.world.getEntityByID(message.passengerId);
         if (entity instanceof IMoCEntity) {
             entity.dismountRidingEntity();
             entity.setPosition(player.posX, player.posY + 1D, player.posZ);

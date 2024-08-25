@@ -16,17 +16,16 @@ public class MoCMessageDismountRidingEntityClient implements IMessage, IMessageH
 
     public MoCMessageDismountRidingEntityClient(int passengerId) {
         this.passengerId = passengerId;
-
     }
 
     @Override
     public void toBytes(ByteBuf buffer) {
-        ByteBufUtils.writeVarInt(buffer, this.passengerId, 5);
+        buffer.writeInt(this.passengerId);
     }
 
     @Override
     public void fromBytes(ByteBuf buffer) {
-        this.passengerId = ByteBufUtils.readVarInt(buffer, 5);
+        this.passengerId = buffer.readInt();
     }
 
     @Override
