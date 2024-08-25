@@ -1,9 +1,7 @@
 package drzhark.mocreatures.network.message;
 
-import drzhark.mocreatures.entity.IMoCEntity;
+import drzhark.mocreatures.network.MoCMessageHandler;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -31,12 +29,7 @@ public class MoCMessageDismountRidingEntityClient implements IMessage, IMessageH
 
     @Override
     public IMessage onMessage(MoCMessageDismountRidingEntityClient message, MessageContext ctx) {
-        EntityPlayer player = ctx.getServerHandler().player;
-
-        Entity entity = player.world.getEntityByID(this.entityId);
-        if (entity instanceof IMoCEntity) {
-            entity.setPosition(player.posX, player.posY + 1D, player.posZ);
-        }
+        MoCMessageHandler.handleMessage(message, ctx);
         return null;
     }
 

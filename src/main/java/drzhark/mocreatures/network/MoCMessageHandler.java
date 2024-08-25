@@ -13,6 +13,7 @@ import drzhark.mocreatures.entity.hostile.MoCEntityOgre;
 import drzhark.mocreatures.entity.passive.MoCEntityHorse;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -157,6 +158,15 @@ public class MoCMessageHandler {
                 MoCMessageNameGUI message = (MoCMessageNameGUI) this.message;
                 Entity entity = MoCProxyClient.mc.player.world.getEntityByID(message.entityId);
                 MoCProxyClient.mc.displayGuiScreen(new MoCGUIEntityNamer(((IMoCEntity) entity), ((IMoCEntity) entity).getPetName()));
+            } else if (this.message instanceof MoCMessageDismountRidingEntityClient) {
+                MoCMessageDismountRidingEntityClient message = (MoCMessageDismountRidingEntityClient) this.message;
+                Entity entity = MoCProxyClient.mc.player.world.getEntityByID(message.entityId);
+                if (entity instanceof IMoCEntity) {
+                    EntityPlayer player = entity.getRidingEntity() instanceof EntityPlayer ? (EntityPlayer) entity.getRidingEntity() : null;
+                    if (player != null) {
+                        entity.setPosition(player.posX, player.posY + 1D, player.posZ);
+                    }
+                }
             }
         }
     }
