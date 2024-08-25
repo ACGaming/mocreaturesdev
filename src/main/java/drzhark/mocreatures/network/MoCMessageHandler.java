@@ -43,6 +43,7 @@ public class MoCMessageHandler {
         INSTANCE.registerMessage(MoCMessageTwoBytes.class, MoCMessageTwoBytes.class, 12, Side.CLIENT);
         INSTANCE.registerMessage(MoCMessageVanish.class, MoCMessageVanish.class, 13, Side.CLIENT);
         INSTANCE.registerMessage(MoCMessageDismountRidingEntityServer.class, MoCMessageDismountRidingEntityServer.class, 14, Side.SERVER);
+        INSTANCE.registerMessage(MoCMessageDismountRidingEntityClient.class, MoCMessageDismountRidingEntityClient.class, 15, Side.CLIENT);
     }
 
     // Wrap client message handling due to 1.8 clients receiving packets on Netty thread
@@ -157,6 +158,16 @@ public class MoCMessageHandler {
                 MoCMessageNameGUI message = (MoCMessageNameGUI) this.message;
                 Entity entity = MoCProxyClient.mc.player.world.getEntityByID(message.entityId);
                 MoCProxyClient.mc.displayGuiScreen(new MoCGUIEntityNamer(((IMoCEntity) entity), ((IMoCEntity) entity).getPetName()));
+            } else if (this.message instanceof MoCMessageDismountRidingEntityClient) {
+                MoCMessageDismountRidingEntityClient message = (MoCMessageDismountRidingEntityClient) this.message;
+                Entity passenger = MoCProxyClient.mc.player.world.getEntityByID(message.passengerId);
+                if (passenger instanceof IMoCEntity) {
+                    EntityPlayer player = passenger.getRidingEntity() instanceof EntityPlayer ? (EntityPlayer) passenger.getRidingEntity() : null;
+                    if (player != null) {
+                        passenger.dismountRidingEntity();
+                        passenger.setPosition(player.posX, player.posY + 2D, player.posZ);
+                    }
+                }
             }
         }
     }
