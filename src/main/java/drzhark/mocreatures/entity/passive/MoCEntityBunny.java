@@ -10,6 +10,7 @@ import drzhark.mocreatures.entity.tameable.MoCEntityTameableAnimal;
 import drzhark.mocreatures.init.MoCLootTables;
 import drzhark.mocreatures.init.MoCSoundEvents;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAISwimming;
@@ -165,6 +166,39 @@ public class MoCEntityBunny extends MoCEntityTameableAnimal {
         }
 
         return MoCLootTables.BUNNY;
+    }
+
+    @Override
+    public void updateRidden() {
+        Entity entity = this.getRidingEntity();
+        if (entity != null && (entity.isDead || entity instanceof EntityLivingBase && ((EntityLivingBase) entity).getHealth() <= 0.0F)) {
+            this.dismountRidingEntity();
+        } else {
+            this.motionX = 0.0D;
+            this.motionY = 0.0D;
+            this.motionZ = 0.0D;
+            this.onUpdate();
+            if (this.isRiding()) {
+                this.updateRiding(entity);
+            }
+        }
+    }
+
+    public void updateRiding(Entity riding) {
+        if (riding != null && riding.isPassenger(this) && riding instanceof EntityPlayer) {
+            float radius = (((EntityPlayer) riding).isElytraFlying() ? 2 : 0);
+            float angle = (0.01745329251F * ((EntityPlayer) riding).renderYawOffset);
+            double extraX = radius * MathHelper.sin((float) (Math.PI + angle));
+            double extraZ = radius * MathHelper.cos(angle);
+            double extraY = (riding.isSneaking() ? 1.1D : 1.4D);
+            this.rotationYaw = ((EntityPlayer) riding).rotationYawHead;
+            this.rotationYawHead = ((EntityPlayer) riding).rotationYawHead;
+            this.prevRotationYaw = ((EntityPlayer) riding).rotationYawHead;
+            this.setPosition(riding.posX + extraX, riding.posY + extraY, riding.posZ + extraZ);
+            if (((EntityPlayer) riding).isElytraFlying()) {
+                this.dismountRidingEntity();
+            }
+        }
     }
 
     @Override
