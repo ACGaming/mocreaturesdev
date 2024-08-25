@@ -36,7 +36,7 @@ public class MoCMessageDismountRidingEntityServer implements IMessage, IMessageH
         Entity entity = player.world.getEntityByID(message.passengerId);
         if (entity instanceof IMoCEntity) {
             entity.dismountRidingEntity();
-            entity.setPosition(player.posX, player.posY + 1D, player.posZ);
+            entity.setPosition(player.posX, player.posY + 2D, player.posZ);
         }
         return null;
     }
