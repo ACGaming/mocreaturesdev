@@ -110,6 +110,7 @@ dependencies {
     implementation rfg.deobf("curse.maven:thermal-expansion-69163:2926431")
     implementation rfg.deobf("curse.maven:thermal-foundation-222880:2926428")
     implementation rfg.deobf("maven.modrinth:crossbow:1.1.0")
+    implementation "curse.maven:llibrary-243298:3116493"
     implementation "curse.maven:industrial-foregoing-266515:2745324"
     implementation "curse.maven:just-enough-resources-jer-240630:4440936"
     implementation "curse.maven:morph-229080:2995522"
