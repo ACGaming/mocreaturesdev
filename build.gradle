@@ -110,12 +110,12 @@ dependencies {
     implementation rfg.deobf("curse.maven:thermal-expansion-69163:2926431")
     implementation rfg.deobf("curse.maven:thermal-foundation-222880:2926428")
     implementation rfg.deobf("maven.modrinth:crossbow:1.1.0")
-    implementation "curse.maven:llibrary-243298:3116493"
+    implementation "curse.maven:llibrary-243298:2505007" // dependency for Rats
+    implementation "curse.maven:rats-323596:3028671" // Rats
     implementation "curse.maven:industrial-foregoing-266515:2745324"
     implementation "curse.maven:just-enough-resources-jer-240630:4440936"
     implementation "curse.maven:morph-229080:2995522"
     implementation "curse.maven:pams-harvestcraft-221857:2904825"
-    implementation "curse.maven:rats-323596:3028671"
     runtimeOnly "com.cleanroommc:assetmover:2.5"
     runtimeOnly "curse.maven:baubles-227083:2518667"
     runtimeOnly "curse.maven:codechicken-lib-1-8-242818:2779848"
