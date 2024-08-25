@@ -16,9 +16,9 @@ import drzhark.mocreatures.entity.tameable.MoCEntityTameableAnimal;
 import drzhark.mocreatures.init.MoCItems;
 import drzhark.mocreatures.init.MoCSoundEvents;
 import drzhark.mocreatures.network.MoCMessageHandler;
-import drzhark.mocreatures.network.message.MoCMessageDismountRidingEntityClient;
 import drzhark.mocreatures.network.message.MoCMessageDismountRidingEntityServer;
 import drzhark.mocreatures.network.message.MoCMessageNameGUI;
+import drzhark.mocreatures.proxy.MoCProxyClient;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockJukebox;
 import net.minecraft.block.BlockJukebox.TileEntityJukebox;
@@ -1226,13 +1226,24 @@ public class MoCTools {
         if (force || entity.isSneaking() || passenger.isInWater()) {
             if (force) MoCreatures.LOGGER.info("Forcing dismount from " + entity + " for passenger " + passenger);
             int passengerId = passenger.getEntityId();
-            MoCMessageHandler.INSTANCE.sendToAllAround(new MoCMessageDismountRidingEntityClient(passengerId), new NetworkRegistry.TargetPoint(entity.world.provider.getDimensionType().getId(), entity.posX, entity.posY, entity.posZ, 64));
+            handleDismountPassengerFromEntity(passengerId);
             MoCMessageHandler.INSTANCE.sendToServer(new MoCMessageDismountRidingEntityServer(passengerId));
             MoCTools.playCustomSound(passenger, SoundEvents.ENTITY_CHICKEN_EGG);
             if (entity instanceof EntityPlayer) {
                 if (IMoCEntity.class.isAssignableFrom(passenger.getClass())) {
                     ((IMoCEntity) passenger).onStopRidingPlayer();
                 }
+            }
+        }
+    }
+
+    public static void handleDismountPassengerFromEntity(int passengerId) {
+        Entity passenger = MoCProxyClient.mc.player.world.getEntityByID(passengerId);
+        if (passenger instanceof IMoCEntity) {
+            EntityPlayer player = passenger.getRidingEntity() instanceof EntityPlayer ? (EntityPlayer) passenger.getRidingEntity() : null;
+            if (player != null) {
+                passenger.dismountRidingEntity();
+                passenger.setPosition(player.posX, player.posY + 2D, player.posZ);
             }
         }
     }
