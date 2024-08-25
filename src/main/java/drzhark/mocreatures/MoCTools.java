@@ -16,7 +16,8 @@ import drzhark.mocreatures.entity.tameable.MoCEntityTameableAnimal;
 import drzhark.mocreatures.init.MoCItems;
 import drzhark.mocreatures.init.MoCSoundEvents;
 import drzhark.mocreatures.network.MoCMessageHandler;
-import drzhark.mocreatures.network.message.MoCMessageDismountRidingEntity;
+import drzhark.mocreatures.network.message.MoCMessageDismountRidingEntityClient;
+import drzhark.mocreatures.network.message.MoCMessageDismountRidingEntityServer;
 import drzhark.mocreatures.network.message.MoCMessageNameGUI;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockJukebox;
@@ -66,6 +67,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -1223,7 +1225,9 @@ public class MoCTools {
         }
         if (force || entity.isSneaking() || passenger.isInWater()) {
             if (force) MoCreatures.LOGGER.info("Forcing dismount from " + entity + " for passenger " + passenger);
-            MoCMessageHandler.INSTANCE.sendToServer(new MoCMessageDismountRidingEntity((entity).getEntityId()));
+            int entityId = entity.getEntityId();
+            MoCMessageHandler.INSTANCE.sendToAllAround(new MoCMessageDismountRidingEntityClient(entityId),new NetworkRegistry.TargetPoint(entity.world.provider.getDimensionType().getId(), entity.posX, entity.posY, entity.posZ, 64));
+            MoCMessageHandler.INSTANCE.sendToServer(new MoCMessageDismountRidingEntityServer(entityId));
             MoCTools.playCustomSound(passenger, SoundEvents.ENTITY_CHICKEN_EGG);
             if (entity instanceof EntityPlayer) {
                 if (IMoCEntity.class.isAssignableFrom(passenger.getClass())) {

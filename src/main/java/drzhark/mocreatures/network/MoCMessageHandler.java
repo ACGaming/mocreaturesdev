@@ -41,6 +41,8 @@ public class MoCMessageHandler {
         INSTANCE.registerMessage(MoCMessageShuffle.class, MoCMessageShuffle.class, 11, Side.CLIENT);
         INSTANCE.registerMessage(MoCMessageTwoBytes.class, MoCMessageTwoBytes.class, 12, Side.CLIENT);
         INSTANCE.registerMessage(MoCMessageVanish.class, MoCMessageVanish.class, 13, Side.CLIENT);
+        INSTANCE.registerMessage(MoCMessageDismountRidingEntityServer.class, MoCMessageDismountRidingEntityServer.class, 14, Side.SERVER);
+        INSTANCE.registerMessage(MoCMessageDismountRidingEntityClient.class, MoCMessageDismountRidingEntityClient.class, 15, Side.CLIENT);
     }
 
     // Wrap client message handling due to 1.8 clients receiving packets on Netty thread
