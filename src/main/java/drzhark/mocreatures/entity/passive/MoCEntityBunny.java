@@ -190,7 +190,7 @@ public class MoCEntityBunny extends MoCEntityTameableAnimal {
             float angle = (0.01745329251F * ((EntityPlayer) riding).renderYawOffset);
             double extraX = radius * MathHelper.sin((float) (Math.PI + angle));
             double extraZ = radius * MathHelper.cos(angle);
-            double extraY = (riding.isSneaking() ? 1.1D : 1.4D);
+            double extraY = getYOffset();
             this.rotationYaw = ((EntityPlayer) riding).rotationYawHead;
             this.rotationYawHead = ((EntityPlayer) riding).rotationYawHead;
             this.prevRotationYaw = ((EntityPlayer) riding).rotationYawHead;
@@ -313,7 +313,7 @@ public class MoCEntityBunny extends MoCEntityTameableAnimal {
     @Override
     public double getYOffset() {
         if (this.getRidingEntity() instanceof EntityPlayer) {
-            return this.getRidingEntity().isSneaking() ? 0.25 : 0.5F;
+            return this.getRidingEntity().isSneaking() ? 1.5 : 1.8F;
         }
 
         return super.getYOffset();

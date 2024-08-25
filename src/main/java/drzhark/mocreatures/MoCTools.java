@@ -1213,12 +1213,7 @@ public class MoCTools {
 
     public static Entity getEntityRidingPlayer(EntityPlayer player) {
         // Get ID for entity that is currently riding player.
-        NBTTagCompound tag = player.getEntityData();
-        UUID animalID = tag.getUniqueId("MOCEntity_Riding_Player");
-        if (animalID == null || player.getUniqueID().equals(animalID)) {
-            return null;
-        }
-        return MoCTools.findTheCorrectEntity(player.getEntityWorld(), animalID);
+        return player.getPassengers().isEmpty() ? null : player.getPassengers().get(0);
     }
 
     public static void dismountPassengerFromEntity(Entity passenger, Entity entity, boolean force) {

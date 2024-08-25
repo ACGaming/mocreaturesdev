@@ -1060,8 +1060,6 @@ public abstract class MoCEntityAnimal extends EntityAnimal implements IMoCEntity
         }
         boolean ret = super.startRiding(player, true);
         if (ret) {
-            NBTTagCompound tag = player.getEntityData();
-            tag.setUniqueId("MOCEntity_Riding_Player", this.getUniqueID());
             return true;
         } else {
             TextComponentTranslation msg = new TextComponentTranslation("msg.mocreatures.petnotreadytorideplayer");
@@ -1072,8 +1070,6 @@ public abstract class MoCEntityAnimal extends EntityAnimal implements IMoCEntity
 
     @Override
     public void onStopRidingPlayer() {
-        NBTTagCompound tag = this.getEntityData();
-        tag.removeTag("MOCEntity_Riding_Player");
         // Called when an Entity is dismounted from riding on the Player's head.
     }
 
