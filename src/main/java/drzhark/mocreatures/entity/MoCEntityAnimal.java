@@ -1054,8 +1054,7 @@ public abstract class MoCEntityAnimal extends EntityAnimal implements IMoCEntity
 
     @Override
     public boolean startRidingPlayer(EntityPlayer player) {
-        Entity entityOnPlayer = MoCTools.getEntityRidingPlayer(player);
-        if (entityOnPlayer != null && entityOnPlayer != this) {
+        if (MoCTools.getEntityRidingPlayer(player) != null) {
             return false; // Something is already riding this player.
         }
         boolean ret = super.startRiding(player, true);

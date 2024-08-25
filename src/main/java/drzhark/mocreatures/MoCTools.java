@@ -16,6 +16,7 @@ import drzhark.mocreatures.entity.tameable.MoCEntityTameableAnimal;
 import drzhark.mocreatures.init.MoCItems;
 import drzhark.mocreatures.init.MoCSoundEvents;
 import drzhark.mocreatures.network.MoCMessageHandler;
+import drzhark.mocreatures.network.message.MoCMessageDismountRidingEntity;
 import drzhark.mocreatures.network.message.MoCMessageNameGUI;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockJukebox;
@@ -1222,8 +1223,7 @@ public class MoCTools {
         }
         if (force || entity.isSneaking() || passenger.isInWater()) {
             if (force) MoCreatures.LOGGER.info("Forcing dismount from " + entity + " for passenger " + passenger);
-            passenger.setPositionAndUpdate(entity.posX, entity.posY + 1D, entity.posZ);
-            passenger.dismountRidingEntity();
+            MoCMessageHandler.INSTANCE.sendToServer(new MoCMessageDismountRidingEntity((entity).getEntityId()));
             MoCTools.playCustomSound(passenger, SoundEvents.ENTITY_CHICKEN_EGG);
             if (entity instanceof EntityPlayer) {
                 if (IMoCEntity.class.isAssignableFrom(passenger.getClass())) {
