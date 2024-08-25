@@ -1231,8 +1231,6 @@ public class MoCTools {
             passenger.dismountRidingEntity();
             MoCTools.playCustomSound(passenger, SoundEvents.ENTITY_CHICKEN_EGG);
             if (entity instanceof EntityPlayer) {
-                NBTTagCompound tag = entity.getEntityData();
-                tag.setUniqueId("MOCEntity_Riding_Player", entity.getUniqueID()); // set to self, because cannot set to null.
                 if (IMoCEntity.class.isAssignableFrom(passenger.getClass())) {
                     ((IMoCEntity) passenger).onStopRidingPlayer();
                 }

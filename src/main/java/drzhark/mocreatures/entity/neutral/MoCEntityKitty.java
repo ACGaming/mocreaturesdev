@@ -513,6 +513,7 @@ public class MoCEntityKitty extends MoCEntityTameableAnimal {
     @Override
     public void onStopRidingPlayer() {
         // Stopped riding player, reset state to Idle.
+        super.onStopRidingPlayer();
         changeKittyState(7);
     }
 

@@ -534,7 +534,7 @@ public abstract class MoCEntityAmbient extends EntityCreature implements IMoCEnt
         if (MoCTools.getEntityRidingPlayer(player) != null) {
             return false; // Something is already riding this player.
         }
-        boolean ret = super.startRiding(player);
+        boolean ret = super.startRiding(player, true);
         if (ret) {
             NBTTagCompound tag = player.getEntityData();
             tag.setUniqueId("MOCEntity_Riding_Player", this.getUniqueID());
@@ -545,6 +545,8 @@ public abstract class MoCEntityAmbient extends EntityCreature implements IMoCEnt
 
     @Override
     public void onStopRidingPlayer() {
+        NBTTagCompound tag = this.getEntityData();
+        tag.removeTag("MOCEntity_Riding_Player");
         // Called when an Entity is dismounted from riding on the Player's head.
     }
 }

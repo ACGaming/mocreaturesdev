@@ -124,16 +124,6 @@ public class MoCEventHooks {
             IMoCTameable mocEntity = (IMoCTameable) player.getRidingEntity();
             mocEntity.setRiderDisconnecting(true);
         }
-
-        // Handles the ENTITY that is riding the PLAYER
-        Entity entityRidingPlayer = MoCTools.getEntityRidingPlayer(player);
-        if (entityRidingPlayer != null) {
-            // System.out.println("PLAYER LEFT THE GAME carrying entity: "+entityRidingPlayer);
-            if (IMoCEntity.class.isAssignableFrom(entityRidingPlayer.getClass())) {
-                IMoCEntity mocEntity = (IMoCEntity) entityRidingPlayer;
-                if (mocEntity.canRidePlayer()) MoCTools.dismountPassengerFromEntity(entityRidingPlayer, player, true);
-            }
-        }
     }
 
     private BlockPos getSafeSpawnPos(EntityLivingBase entity, BlockPos near) {
