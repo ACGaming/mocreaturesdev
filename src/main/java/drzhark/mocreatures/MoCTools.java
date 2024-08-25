@@ -1225,9 +1225,9 @@ public class MoCTools {
         }
         if (force || entity.isSneaking() || passenger.isInWater()) {
             if (force) MoCreatures.LOGGER.info("Forcing dismount from " + entity + " for passenger " + passenger);
-            int entityId = entity.getEntityId();
-            MoCMessageHandler.INSTANCE.sendToAllAround(new MoCMessageDismountRidingEntityClient(entityId),new NetworkRegistry.TargetPoint(entity.world.provider.getDimensionType().getId(), entity.posX, entity.posY, entity.posZ, 64));
-            MoCMessageHandler.INSTANCE.sendToServer(new MoCMessageDismountRidingEntityServer(entityId));
+            int passengerId = passenger.getEntityId();
+            MoCMessageHandler.INSTANCE.sendToAllAround(new MoCMessageDismountRidingEntityClient(passengerId),new NetworkRegistry.TargetPoint(entity.world.provider.getDimensionType().getId(), entity.posX, entity.posY, entity.posZ, 64));
+            MoCMessageHandler.INSTANCE.sendToServer(new MoCMessageDismountRidingEntityServer(passengerId));
             MoCTools.playCustomSound(passenger, SoundEvents.ENTITY_CHICKEN_EGG);
             if (entity instanceof EntityPlayer) {
                 if (IMoCEntity.class.isAssignableFrom(passenger.getClass())) {

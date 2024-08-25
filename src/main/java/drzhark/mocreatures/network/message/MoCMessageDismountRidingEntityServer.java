@@ -11,29 +11,29 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class MoCMessageDismountRidingEntityServer implements IMessage, IMessageHandler<MoCMessageDismountRidingEntityServer, IMessage> {
 
-    public int entityId;
+    public int passengerId;
     public MoCMessageDismountRidingEntityServer() {
     }
 
-    public MoCMessageDismountRidingEntityServer(int entityId) {
-        this.entityId = entityId;
+    public MoCMessageDismountRidingEntityServer(int passengerId) {
+        this.passengerId = passengerId;
     }
 
     @Override
     public void toBytes(ByteBuf buffer) {
-        ByteBufUtils.writeVarInt(buffer, this.entityId, 5);
+        ByteBufUtils.writeVarInt(buffer, this.passengerId, 5);
     }
 
     @Override
     public void fromBytes(ByteBuf buffer) {
-        this.entityId = ByteBufUtils.readVarInt(buffer, 5);
+        this.passengerId = ByteBufUtils.readVarInt(buffer, 5);
     }
 
     @Override
     public IMessage onMessage(MoCMessageDismountRidingEntityServer message, MessageContext ctx) {
         EntityPlayer player = ctx.getServerHandler().player;
 
-        Entity entity = player.world.getEntityByID(this.entityId);
+        Entity entity = player.world.getEntityByID(this.passengerId);
         if (entity instanceof IMoCEntity) {
             entity.dismountRidingEntity();
             entity.setPosition(player.posX, player.posY + 1D, player.posZ);
@@ -43,7 +43,7 @@ public class MoCMessageDismountRidingEntityServer implements IMessage, IMessageH
 
     @Override
     public String toString() {
-        return String.format("MoCMessageDismountRidingEntityServer - entityId:%s", this.entityId);
+        return String.format("MoCMessageDismountRidingEntityServer - passengerId:%s", this.passengerId);
     }
 
 }

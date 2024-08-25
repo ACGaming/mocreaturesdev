@@ -9,22 +9,24 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class MoCMessageDismountRidingEntityClient implements IMessage, IMessageHandler<MoCMessageDismountRidingEntityClient, IMessage> {
 
-    public int entityId;
+    public int passengerId;
+
     public MoCMessageDismountRidingEntityClient() {
     }
 
-    public MoCMessageDismountRidingEntityClient(int entityId) {
-        this.entityId = entityId;
+    public MoCMessageDismountRidingEntityClient(int passengerId) {
+        this.passengerId = passengerId;
+
     }
 
     @Override
     public void toBytes(ByteBuf buffer) {
-        ByteBufUtils.writeVarInt(buffer, this.entityId, 5);
+        ByteBufUtils.writeVarInt(buffer, this.passengerId, 5);
     }
 
     @Override
     public void fromBytes(ByteBuf buffer) {
-        this.entityId = ByteBufUtils.readVarInt(buffer, 5);
+        this.passengerId = ByteBufUtils.readVarInt(buffer, 5);
     }
 
     @Override
@@ -35,7 +37,7 @@ public class MoCMessageDismountRidingEntityClient implements IMessage, IMessageH
 
     @Override
     public String toString() {
-        return String.format("MoCMessageDismountRidingEntityClient - entityId:%s", this.entityId);
+        return String.format("MoCMessageDismountRidingEntityClient - passengerId:%s", this.passengerId);
     }
 
 }

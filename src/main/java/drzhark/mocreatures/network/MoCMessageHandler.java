@@ -160,7 +160,7 @@ public class MoCMessageHandler {
                 MoCProxyClient.mc.displayGuiScreen(new MoCGUIEntityNamer(((IMoCEntity) entity), ((IMoCEntity) entity).getPetName()));
             } else if (this.message instanceof MoCMessageDismountRidingEntityClient) {
                 MoCMessageDismountRidingEntityClient message = (MoCMessageDismountRidingEntityClient) this.message;
-                Entity entity = MoCProxyClient.mc.player.world.getEntityByID(message.entityId);
+                Entity entity = MoCProxyClient.mc.player.world.getEntityByID(message.passengerId);
                 if (entity instanceof IMoCEntity) {
                     EntityPlayer player = entity.getRidingEntity() instanceof EntityPlayer ? (EntityPlayer) entity.getRidingEntity() : null;
                     if (player != null) {
