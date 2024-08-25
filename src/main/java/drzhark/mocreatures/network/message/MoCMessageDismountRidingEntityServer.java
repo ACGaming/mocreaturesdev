@@ -2,7 +2,6 @@ package drzhark.mocreatures.network.message;
 
 import drzhark.mocreatures.MoCTools;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -29,9 +28,7 @@ public class MoCMessageDismountRidingEntityServer implements IMessage, IMessageH
 
     @Override
     public IMessage onMessage(MoCMessageDismountRidingEntityServer message, MessageContext ctx) {
-        // get player from playerId
-        EntityPlayer player = ctx.getServerHandler().player;
-        MoCTools.handleDismountPassengerFromEntity(message.passengerId, player);
+        MoCTools.handleDismountPassengerFromEntity(message.passengerId);
         return null;
     }
 
