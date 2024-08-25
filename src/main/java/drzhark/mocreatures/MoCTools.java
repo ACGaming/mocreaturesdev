@@ -1226,7 +1226,7 @@ public class MoCTools {
         if (force || entity.isSneaking() || passenger.isInWater()) {
             if (force) MoCreatures.LOGGER.info("Forcing dismount from " + entity + " for passenger " + passenger);
             int passengerId = passenger.getEntityId();
-            handleDismountPassengerFromEntity(passengerId);
+            handleDismountPassengerFromEntity(passengerId, entity instanceof EntityPlayer ? (EntityPlayer) entity : null);
             MoCMessageHandler.INSTANCE.sendToServer(new MoCMessageDismountRidingEntityServer(passengerId));
             MoCTools.playCustomSound(passenger, SoundEvents.ENTITY_CHICKEN_EGG);
             if (entity instanceof EntityPlayer) {
@@ -1237,10 +1237,12 @@ public class MoCTools {
         }
     }
 
-    public static void handleDismountPassengerFromEntity(int passengerId) {
+    public static void handleDismountPassengerFromEntity(int passengerId, EntityPlayer player) {
         Entity passenger = MoCProxyClient.mc.player.world.getEntityByID(passengerId);
         if (passenger instanceof IMoCEntity) {
-            EntityPlayer player = passenger.getRidingEntity() instanceof EntityPlayer ? (EntityPlayer) passenger.getRidingEntity() : null;
+            if (player == null) {
+                player = passenger.getRidingEntity() instanceof EntityPlayer ? (EntityPlayer) passenger.getRidingEntity() : null;
+            }
             if (player != null) {
                 passenger.dismountRidingEntity();
                 passenger.setPosition(player.posX, player.posY + 2D, player.posZ);
