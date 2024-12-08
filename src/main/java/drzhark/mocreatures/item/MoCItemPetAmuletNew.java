@@ -30,6 +30,7 @@ public class MoCItemPetAmuletNew extends MoCItem {
     }
 
     @Override
+    // Release Entity
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (!world.isRemote && stack.hasTagCompound()) {
@@ -49,10 +50,13 @@ public class MoCItemPetAmuletNew extends MoCItem {
     }
 
     @Override
+    // Capture Entity
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand) {
         if (!entity.world.isRemote && !stack.hasTagCompound()/* && entity.hasCustomName()*/) {
             NBTTagCompound entityNBT = new NBTTagCompound();
-            entity.writeToNBT(entityNBT);
+            if (!entity.writeToNBTAtomically(entityNBT)) {
+                return false;
+            }
             entityNBT.setString("id", EntityList.getKey(entity.getClass()).toString());
             entityNBT.setString("name", entity.getName());
             stack.setTagCompound(entityNBT);

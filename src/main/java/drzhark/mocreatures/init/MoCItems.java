@@ -65,6 +65,7 @@ public class MoCItems {
     public static final MoCItem fishnetfull = new MoCItemPetAmulet("fishnetfull");
     public static final MoCItem petamulet = new MoCItemPetAmulet("petamulet", 1);
     public static final MoCItem petamuletfull = new MoCItemPetAmulet("petamuletfull", 1);
+    public static final MoCItem petamuletuniversal = new MoCItemPetAmuletNew("petamuletuniversal");
     public static final MoCItem heartdarkness = new MoCItem("heartdarkness");
     public static final MoCItem heartEternal = new MoCItem("heart_eternal");
     public static final MoCItem heartfire = new MoCItem("heartfire");
@@ -290,6 +291,7 @@ public class MoCItems {
                     fishnetfull,
                     petamulet,
                     petamuletfull,
+                    petamuletuniversal,
 
                     helmetFur,
                     chestFur,
